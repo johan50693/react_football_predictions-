@@ -1,6 +1,7 @@
+import { AppRouter } from "./router/AppRouter"
 
 export const FootballApp = () => {
   return (
-    <div>footballApp</div>
+    <AppRouter/>
   )
 }
