@@ -15,6 +15,7 @@ export const RegisterPage = () => {
             >
               <TextField
                 required
+                autoComplete="off"
                 fullWidth
                 label="Nombre"
                 type="text"
@@ -47,6 +48,7 @@ export const RegisterPage = () => {
               <TextField
                 required
                 fullWidth
+                autoComplete="off"
                 label="Contraseña"
                 type="password"
                 placeholder="Ingresa tu contraseña"
