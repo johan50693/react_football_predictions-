@@ -4,10 +4,14 @@ import { styled, useTheme } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Divider, Link, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
+import QueryStatsIcon from '@mui/icons-material/QueryStats'
+import StickyNote2Icon from '@mui/icons-material/StickyNote2'
+import GroupsIcon from '@mui/icons-material/Groups'
+import { Link as RouterLink} from 'react-router-dom'
 
 export const openedMixin = (theme,drawerWidth) => ({
   width: drawerWidth,
@@ -70,7 +74,7 @@ export const SideBar = ({ open, drawerWidth, handleDrawerClose }) => {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          {['Torneos', 'Pronosticos', 'Encuestas', 'Participantes'].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
@@ -86,32 +90,15 @@ export const SideBar = ({ open, drawerWidth, handleDrawerClose }) => {
                     justifyContent: 'center',
                   }}
                 >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {
+                    (index === 0 )
+                    ? <Link component={RouterLink} to='/' underline="none"><EmojiEventsIcon /></Link> 
+                    : ( index === 1) 
+                      ? <Link component={RouterLink} to='/tournament/2/prediction' underline="none"><QueryStatsIcon/> </Link>
+                      : ( index === 2 )
+                        ? <Link component={RouterLink} to='/tournament/2/poll' underline="none"><StickyNote2Icon/></Link>
+                        : <Link component={RouterLink} to='/tournament/2/participants' underline="none"><GroupsIcon/></Link>
+                  }
                 </ListItemIcon>
                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>

@@ -43,7 +43,7 @@ export const NavBar = ({drawerWidth, open, handleDrawerOpen}) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Football predictions
+            Pronosticos de Fútbol
           </Typography>
         </Toolbar>
       </NavBarStyled>
