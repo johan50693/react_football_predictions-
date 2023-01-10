@@ -3,7 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { BaseLayout } from "../layout/BaseLayout";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link as RouterLink } from "react-router-dom";
-import { useForm } from "../../hooks/useForm";
+import { useForm } from "../../hooks";
 import { useState } from "react";
 
 const formData = {
