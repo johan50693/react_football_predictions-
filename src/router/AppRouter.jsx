@@ -6,7 +6,7 @@ import { FootballRoutes } from "../football/router/FootballRoutes";
 
 export const AppRouter = () => {
 
-  const sesion = 'authenticated';
+  const sesion = 'not-authenticated';
 
   return (
 

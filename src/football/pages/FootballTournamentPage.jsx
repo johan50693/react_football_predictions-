@@ -3,32 +3,59 @@ import { DataGrid } from "@mui/x-data-grid";
 import { BaseLayout } from "../layout/BaseLayout";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link as RouterLink } from "react-router-dom";
+import { useForm } from "../../hooks/useForm";
+import { useState } from "react";
+
+const formData = {
+  name: '',
+  description: '',
+  exactMarker: '',
+  selectWinner: '',
+  goalsOfaTeam: '',
+  goalDifference: '',
+};
+
+const formValidations = {
+  name : [(value) => value.length > 3, 'El nombre debe tener mas de 3 letras'],
+  description : [(value) => value.length >= 3,'La descripción  debe tener mas de 3 letras'],
+  exactMarker : [(value) => value > 0,'Los puntajes deben ser mayores a 0'],
+  selectWinner : [(value) => value > 0,'Los puntajes deben ser mayores a 0'],
+  goalsOfaTeam : [(value) => value > 0,'Los puntajes deben ser mayores a 0'],
+  goalDifference : [(value) => value > 0,'Los puntajes deben ser mayores a 0'],
+}
 
 export const FootballTournamentPage = () => {
 
-  const columns = [
-    //TODO: Definir renderCell para agregar inpusts dinamicos a los campos de goles
-    { field: 'nombre', headerName: 'Nombre', flex: 1, minWidth: 100 },
-    { field: 'puntos', headerName: 'Puntos', flex: 1, minWidth: 50 },
-  ];
-  
-  const rows = [
-    { id: 1, nombre: 'Barcelona', puntos: 10 },
-    { id: 2, nombre: 'Real Madrid', puntos: 9 },
-    { id: 3, nombre: 'Manchester Utd', puntos: 8 },
-    { id: 4, nombre: 'PSG', puntos: 7 },
-    { id: 5, nombre: 'Liverpool', puntos: 6 },
-    { id: 6, nombre: 'Villarreal', puntos: 5 },
-    { id: 7, nombre: 'Tottenham', puntos: 4 },
-    { id: 8, nombre: 'Chelsea', puntos: 3 },
-    { id: 9, nombre: 'Arsenal', puntos: 2 },
-  ];
+  const [formSubmited, setformSubmited] = useState(false);
+  const {
+          onInputChange, 
+          name, 
+          description, 
+          exactMarker, 
+          goalDifference, 
+          selectWinner, 
+          goalsOfaTeam, 
+          formState,
+          nameValid,
+          descriptionValid,
+          exactMarkerValid,
+          goalDifferenceValid,
+          selectWinnerValid,
+          goalsOfaTeamValid,
+          isFormValid
+        } = useForm(formData,formValidations);
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    setformSubmited(true);
+    if(!isFormValid) return;
+  }
 
   return (
     <BaseLayout>
       <h1>Crear Torneo</h1>
 
-      <form >
+      <form onSubmit={onSubmit} >
           <Grid container> 
             <Grid
                   item
@@ -43,7 +70,10 @@ export const FootballTournamentPage = () => {
                 type="text"
                 placeholder="Ingresa el nombre del torneo"
                 name="name"
-                value=""
+                value={name}
+                onChange={onInputChange}
+                error={!!nameValid && formSubmited}
+                helperText={nameValid}
               />
             </Grid>
             <Grid
@@ -58,7 +88,10 @@ export const FootballTournamentPage = () => {
                 type="text"
                 placeholder="Ingresa una descripción para el torneo"
                 name="description"
-                value=""
+                value={description}
+                onChange={onInputChange}
+                error={!!descriptionValid && formSubmited}
+                helperText={descriptionValid}
               />
             </Grid>
             <Grid
@@ -74,7 +107,10 @@ export const FootballTournamentPage = () => {
                 type="number"
                 placeholder="Ingresa los puntos ganados cuando se acierta el marcador es exacto"
                 name="exactMarker"
-                value=""
+                value={exactMarker}
+                onChange={onInputChange}
+                error={!!exactMarkerValid && formSubmited}
+                helperText={exactMarkerValid}
               />
             </Grid>
             <Grid
@@ -89,8 +125,11 @@ export const FootballTournamentPage = () => {
                 label="Selección del ganador"
                 type="number"
                 placeholder="Ingresa los puntos ganados cuando se acierta el ganador"
-                name="password"
-                value=""
+                name="selectWinner"
+                value={selectWinner}
+                onChange={onInputChange}
+                error={!!selectWinnerValid && formSubmited}
+                helperText={selectWinnerValid}
               />
             </Grid>
             <Grid
@@ -105,8 +144,11 @@ export const FootballTournamentPage = () => {
                 label="Goles de un equipo"
                 type="number"
                 placeholder="Ingresa los puntos ganados cuando se acierta los goles de un equipo"
-                name="password"
-                value=""
+                name="goalsOfaTeam"
+                value={goalsOfaTeam}
+                onChange={onInputChange}
+                error={!!goalsOfaTeamValid && formSubmited}
+                helperText={goalsOfaTeamValid}
               />
             </Grid>
             <Grid
@@ -121,8 +163,11 @@ export const FootballTournamentPage = () => {
                 label="Diferencia de goles"
                 type="number"
                 placeholder="Ingresa los puntos ganados cuando se acierta la diferencia de goles"
-                name="password"
-                value=""
+                name="goalDifference"
+                value={goalDifference}
+                onChange={onInputChange}
+                error={!!goalDifferenceValid && formSubmited}
+                helperText={goalDifferenceValid}
               />
             </Grid>
             <Grid
