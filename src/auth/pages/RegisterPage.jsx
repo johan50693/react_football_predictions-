@@ -38,7 +38,7 @@ export const RegisterPage = () => {
     if(!isFormValid) return;
   }
 
-  return (
+  return ( 
     <AuthLayout title={'Registro'} imageSrc={imgRegister} heightBox={ isFormValid ? 450: 470}>
       <form onSubmit={onSubmit}>
           <Grid container> 

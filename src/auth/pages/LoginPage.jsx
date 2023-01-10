@@ -1,13 +1,37 @@
 import { Directions } from "@mui/icons-material"
 import { Button, Grid, Link, TextField, Typography } from "@mui/material"
+import { useState } from "react"
 import { Link as RouterLink } from 'react-router-dom'
 import imgLogin from '../../assets/img/login.jpg'
+import { useForm } from "../../hooks"
 import { AuthLayout } from "../layout/AuthLayout"
 
+const FormData = {
+  email: '',
+  password: '',
+};
+
 export const LoginPage = () => {
+
+  const [formSubmited, setFormSubmited] = useState(false);
+
+  const {
+          email, 
+          password, 
+          onInputChange,
+          isFormValid,
+        } = useForm(FormData);
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    setFormSubmited(true);
+    if(!isFormValid) return;
+    console.log(email,password);
+  }
+
   return (
       <AuthLayout title={'Pronosticos de partidos'} imageSrc={imgLogin} heightBox={420}>
-        <form >
+        <form onSubmit={onSubmit}>
           <Grid container> 
             <Grid
                   item
@@ -22,7 +46,8 @@ export const LoginPage = () => {
                 type="email"
                 placeholder="Ingresa tu correo electrónico"
                 name="email"
-                value=""
+                value={email}
+                onChange={onInputChange}
               />
             </Grid>
             <Grid
@@ -37,7 +62,8 @@ export const LoginPage = () => {
                 type="password"
                 placeholder="Ingresa tu contraseña"
                 name="password"
-                value=""
+                value={password}
+                onChange={onInputChange}
               />
             </Grid>
             <Grid
