@@ -3,7 +3,7 @@ import { Button, Grid, Link, TextField, Typography } from "@mui/material"
 import { useState } from "react"
 import { Link as RouterLink } from 'react-router-dom'
 import imgLogin from '../../assets/img/login.jpg'
-import { useForm } from "../../hooks"
+import { useAuthStore, useForm } from "../../hooks"
 import { AuthLayout } from "../layout/AuthLayout"
 
 const FormData = {
@@ -14,6 +14,7 @@ const FormData = {
 export const LoginPage = () => {
 
   const [formSubmited, setFormSubmited] = useState(false);
+  const { startLogin } = useAuthStore();
 
   const {
           email, 
@@ -27,6 +28,7 @@ export const LoginPage = () => {
     setFormSubmited(true);
     if(!isFormValid) return;
     console.log(email,password);
+    startLogin({email,password});
   }
 
   return (
