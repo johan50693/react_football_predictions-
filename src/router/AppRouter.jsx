@@ -1,18 +1,29 @@
+import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom"
 import { LoginRoutes } from "../auth/routes/LoginRoutes";
 import { FootballRoutes } from "../football/router/FootballRoutes";
+import { useAuthStore } from "../hooks";
 
 
 
 export const AppRouter = () => {
 
-  const sesion = 'not-authenticated';
+  const { checkAuthToken, status } = useAuthStore();
+  // const sesion = 'not-authenticated';
+
+  useEffect(() => {
+    checkAuthToken();
+  }, [])
+  
+  if( status == 'checking'){
+    return (<h1>Loading...</h1>)
+  }
 
   return (
 
     <Routes>
       {
-        ( sesion === 'authenticated') 
+        ( status === 'authenticated') 
         ? <Route path="/*" exact  element={<FootballRoutes />}/>
         : <Route path="/auth/*" exact  element={<LoginRoutes />}/>
       }

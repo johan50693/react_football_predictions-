@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { FootballPage } from '../pages/FootballPage'
 import { FootballParticipantsPage } from '../pages/FootballParticipantsPage'
 import { FootballPredictionPage } from '../pages/FootballPredictionPage'
@@ -14,6 +14,7 @@ export const FootballRoutes = () => {
       <Route path='/tournament/:id/prediction/' element={ <FootballPredictionPage/> }/>
       <Route path='/tournament/:id/poll' element={ <FootbalPoolPage/> }/>
       <Route path='/tournament/:id/participants' element={ <FootballParticipantsPage/> }/>
+      <Route path="/*" element={<Navigate to="/" />} />
     </Routes>
   )
 }

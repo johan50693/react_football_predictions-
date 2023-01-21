@@ -27,7 +27,6 @@ export const LoginPage = () => {
     event.preventDefault();
     setFormSubmited(true);
     if(!isFormValid) return;
-    console.log(email,password);
     startLogin({email,password});
   }
 

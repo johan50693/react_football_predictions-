@@ -2,7 +2,7 @@ import { AuthLayout } from "../layout/AuthLayout"
 import imgRegister from '../../assets/img/register.jpg'
 import { Button, Grid, Link, TextField, Typography } from "@mui/material"
 import { Link as RouterLink} from 'react-router-dom'
-import { useForm } from "../../hooks";
+import { useAuthStore, useForm } from "../../hooks";
 import { useState } from "react";
 
 
@@ -21,6 +21,7 @@ const formValidations = {
 export const RegisterPage = () => {
 
   const [formSubmited, setFormSubmited] = useState(false);
+  const {startRegister} = useAuthStore();
 
   const { name, 
           email, 
@@ -36,6 +37,7 @@ export const RegisterPage = () => {
     event.preventDefault();
     setFormSubmited(true);
     if(!isFormValid) return;
+    startRegister({name,email,password});
   }
 
   return ( 
