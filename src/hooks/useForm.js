@@ -42,6 +42,8 @@ export const useForm = ( initialForm = {}, formValidations = {}) => {
   }
 
   const onResetForm = () => {
+    console.log("setrestsetrest")
+    console.log(initialForm)
     setFormState(initialForm);
   }
 
@@ -52,6 +54,7 @@ export const useForm = ( initialForm = {}, formValidations = {}) => {
     ...formValidation,
     isFormValid,
     onResetForm,
+    setFormState,
   }
 
 }

@@ -11,6 +11,7 @@ export const FootballRoutes = () => {
     <Routes>
       <Route path='/' element={ <FootballPage/> }/>
       <Route path='/tournament/create' element={ <FootballTournamentPage/> }/>
+      <Route path='/tournament/show/:id' element={ <FootballTournamentPage/> }/>
       <Route path='/tournament/:id/prediction/' element={ <FootballPredictionPage/> }/>
       <Route path='/tournament/:id/poll' element={ <FootbalPoolPage/> }/>
       <Route path='/tournament/:id/participants' element={ <FootballParticipantsPage/> }/>
