@@ -9,10 +9,11 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { onActiveTournament } from "../../store/tournaments/tournamentSlice";
+import Swal from "sweetalert2";
 
 export const FootballPage = () => {
 
-  const { startLoadTournaments, tournaments} = useTournamentsStore();
+  const { startLoadTournaments, tournaments, startDeleteTournament} = useTournamentsStore();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const columns = [
@@ -34,50 +35,33 @@ export const FootballPage = () => {
                 winner_selection
               } = params.row;
 
-        const onClickCreate = (e) => {
-          navigate('/tournament/create');
-          return;
-          e.stopPropagation(); // don't select this row after clicking
-          const api = params.api;
-          const thisRow= {};
-          api
-            .getAllColumns()
-            .filter((c) => c.field !== "__check__" && !!c)
-            .forEach(
-              (c) => (thisRow[c.field] = params.getValue(params.id, c.field))
-            );
-          // return alert(JSON.stringify(thisRow, null, 4));
-          return '<Button variant="text">Text</Button>';
-        };
-
         const onClickEdit = (e) => {
           dispatch(onActiveTournament({id,name,description,exact_marker,goals_difference,goals_of_a_team,winner_selection}));
           navigate('/tournament/show/'+params.id);
           return;
-          e.stopPropagation(); // don't select this row after clicking
-          const api = params.api;
-          const thisRow= {};
-          api
-            .getAllColumns()
-            .filter((c) => c.field !== "__check__" && !!c)
-            .forEach(
-              (c) => (thisRow[c.field] = params.getValue(params.id, c.field))
-            );
-          // return alert(JSON.stringify(thisRow, null, 4));
-          return '<Button variant="text">Text</Button>';
         };
 
         const onClickDelete = (e) => {
-          e.stopPropagation(); // don't select this row after clicking
-          const api = params.api;
-          const thisRow= {};
-          api
-            .getAllColumns()
-            .filter((c) => c.field !== "__check__" && !!c)
-            .forEach(
-              (c) => (thisRow[c.field] = params.getValue(params.id, c.field))
-            );
-          return alert(JSON.stringify(thisRow, null, 4));
+          console.log(params);
+          Swal.fire({
+            title: `Confirmación`,
+            text: `¿Quieres eliminar el torneo ${params.row.name}?`,
+            showDenyButton: true,
+            // showCancelButton: true,
+            confirmButtonText: 'Si',
+            denyButtonText: 'No',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              try {
+                startDeleteTournament({id:params.id});
+                // Swal.fire('Torneo eliminado', '', 'success')
+              } catch (error) {
+                console.log(error)
+              }
+            } else if (result.isDenied) {
+              // Swal.fire('Changes are not saved', '', 'info')
+            }
+          })
         };
   
         return (<Grid container
@@ -88,10 +72,6 @@ export const FootballPage = () => {
                       alignItems='center'
                       directions="column">
                   <Grid item>
-                    <Tooltip title="Editar">
-                        <RuleIcon onClick={onClickCreate}/>
-                    </Tooltip>
-                  </Grid><Grid item>
                     <Tooltip title="Editar">
                         <EditIcon onClick={onClickEdit}/>
                     </Tooltip>
@@ -117,6 +97,27 @@ export const FootballPage = () => {
       <h1>Torneos Activos</h1>
 
       <div style={{ height: 400, width: '100%' }}>
+      <Grid container 
+                  spacing={2} 
+                  justifyContent='center'
+                  alignItems='left'
+                  directions= "column">
+              <Grid
+                  item
+                  xs={12}
+                  md={12}
+                  sx={{mb:2}}
+
+            >
+              <Button 
+                      fullWidth
+                      onClick={() => navigate('/tournament/create')}
+                      type="submit"
+                      variant="contained">
+                        Crear
+              </Button>
+            </Grid>
+            </Grid>
       <DataGrid
         rows={tournaments}
         getRowHeight={() => 'auto'}

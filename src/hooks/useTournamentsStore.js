@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import footballApi from '../apis/footballApi';
 import { onChecking } from '../store';
-import { onAddNewTournament, onLoadTournaments, onUpdateTournament } from '../store/tournaments/tournamentSlice';
+import { onAddNewTournament, onDeleteTournament, onLoadTournaments, onUpdateTournament } from '../store/tournaments/tournamentSlice';
 
 export const useTournamentsStore = () => {
   
@@ -69,6 +69,23 @@ export const useTournamentsStore = () => {
     }
   }
 
+  const startDeleteTournament = async ({id}) => {
+
+    try {
+
+      const {data} = await footballApi.delete('/tournament/'+id);
+      dispatch(onDeleteTournament({id}))
+      navigate('/');
+      Swal.fire({
+        title: "Eliminación Exitosa",
+        text: data.message,
+        icon: "success",
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return {
     // *Propiedades
     tournaments,
@@ -76,5 +93,6 @@ export const useTournamentsStore = () => {
     startLoadTournaments,
     startCreateTournament,
     startUpdateTournament,
+    startDeleteTournament,
   }
 }

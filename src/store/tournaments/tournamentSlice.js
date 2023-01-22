@@ -25,8 +25,9 @@ export const tournamentSlice = createSlice({
       state.tournaments.push(payload);
       state.active = null;
     },
-    onDeleteTournament: (state) => {
-
+    onDeleteTournament: (state,{payload}) => {
+      state.active = null;
+      state.tournaments = state.tournaments.filter( tournament => tournament.id != payload.id)
     },
     onUpdateTournament: (state, {payload}) => {
       state.tournaments= state.tournaments.map( tournament =>  {
