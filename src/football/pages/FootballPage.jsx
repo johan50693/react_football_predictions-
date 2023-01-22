@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { onActiveTournament } from "../../store/tournaments/tournamentSlice";
 import Swal from "sweetalert2";
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 export const FootballPage = () => {
 
@@ -34,6 +35,12 @@ export const FootballPage = () => {
                 name,
                 winner_selection
               } = params.row;
+
+        const onClickDetail = (e) => {
+          dispatch(onActiveTournament({id,name,description,exact_marker,goals_difference,goals_of_a_team,winner_selection}));
+          navigate(`/tournament/${params.id}/prediction`);
+          return;
+        };
 
         const onClickEdit = (e) => {
           dispatch(onActiveTournament({id,name,description,exact_marker,goals_difference,goals_of_a_team,winner_selection}));
@@ -71,6 +78,11 @@ export const FootballPage = () => {
                       justifyContent='center'
                       alignItems='center'
                       directions="column">
+                    <Grid item>
+                    <Tooltip title="Detalle">
+                        <RemoveRedEyeIcon onClick={onClickDetail}/>
+                    </Tooltip>
+                  </Grid>
                   <Grid item>
                     <Tooltip title="Editar">
                         <EditIcon onClick={onClickEdit}/>
