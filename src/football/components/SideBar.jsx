@@ -10,8 +10,10 @@ import MailIcon from '@mui/icons-material/Mail';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
 import QueryStatsIcon from '@mui/icons-material/QueryStats'
 import StickyNote2Icon from '@mui/icons-material/StickyNote2'
+import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 import GroupsIcon from '@mui/icons-material/Groups'
 import { Link as RouterLink} from 'react-router-dom'
+import { useSelector } from 'react-redux';
 
 export const openedMixin = (theme,drawerWidth) => ({
   width: drawerWidth,
@@ -63,7 +65,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export const SideBar = ({ open, drawerWidth, handleDrawerClose }) => {
 
   const theme = useTheme();
-
+  const { active } = useSelector(state => state.tournament);
   return (
 
     <SideBarStyled variant="permanent" open={open} drawerWidth={drawerWidth}>
@@ -74,7 +76,7 @@ export const SideBar = ({ open, drawerWidth, handleDrawerClose }) => {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Torneos', 'Pronosticos', 'Encuestas', 'Participantes'].map((text, index) => (
+          {['Torneos', 'Pronosticos', 'Partidos', 'Participantes'].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
@@ -94,10 +96,10 @@ export const SideBar = ({ open, drawerWidth, handleDrawerClose }) => {
                     (index === 0 )
                     ? <Link component={RouterLink} to='/' underline="none"><EmojiEventsIcon /></Link> 
                     : ( index === 1) 
-                      ? <Link component={RouterLink} to='/tournament/2/prediction' underline="none"><QueryStatsIcon/> </Link>
+                      ? <Link component={RouterLink} to={`/tournament/${active?.id}/prediction`} underline="none"><QueryStatsIcon/> </Link>
                       : ( index === 2 )
-                        ? <Link component={RouterLink} to='/tournament/2/poll' underline="none"><StickyNote2Icon/></Link>
-                        : <Link component={RouterLink} to='/tournament/2/participants' underline="none"><GroupsIcon/></Link>
+                        ? <Link component={RouterLink} to={`/tournament/${active?.id}/matches`} underline="none"><SportsSoccerIcon/></Link>
+                        : <Link component={RouterLink} to={`/tournament/${active?.id}/participants`} underline="none"><GroupsIcon/></Link>
                   }
                 </ListItemIcon>
                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />

@@ -49,7 +49,7 @@ export const FootballPage = () => {
         };
 
         const onClickDelete = (e) => {
-          console.log(params);
+          
           Swal.fire({
             title: `Confirmación`,
             text: `¿Quieres eliminar el torneo ${params.row.name}?`,
