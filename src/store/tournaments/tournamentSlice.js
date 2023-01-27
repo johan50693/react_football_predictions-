@@ -14,12 +14,6 @@ export const tournamentSlice = createSlice({
       state.isLoadingEvents = false;
       state.active = null;
       state.tournaments = payload.data;
-      // payload.data.forEach(tournament => {
-      //   const exist = state.tournaments.some( item => item.id === tournament.id);
-      //   if (!exist) {
-      //     state.tournaments.push(tournament);
-      //   }
-      // });
     },
     onAddNewTournament: (state,{payload}) => {
       state.tournaments.push(payload);

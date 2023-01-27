@@ -1,10 +1,10 @@
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { FootballMatchPage } from '../pages/FootballMatchPage'
 import { FootballPage } from '../pages/FootballPage'
 import { FootballParticipantsPage } from '../pages/FootballParticipantsPage'
 import { FootballPredictionPage } from '../pages/FootballPredictionPage'
 import { FootballTournamentPage } from '../pages/FootballTournamentPage'
+import { FootballMatchPage } from '../pages/match/FootballMatchPage'
 
 export const FootballRoutes = () => {
   return (
