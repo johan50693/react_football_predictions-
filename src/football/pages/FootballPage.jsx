@@ -1,7 +1,5 @@
 import { Button, Grid, Tooltip } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { BaseLayout } from "../layout/BaseLayout"
-import RuleIcon from '@mui/icons-material/Rule'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useTournamentsStore } from "../../hooks/useTournamentsStore";
@@ -11,12 +9,16 @@ import { useDispatch } from "react-redux";
 import { onActiveTournament } from "../../store/tournaments/tournamentSlice";
 import Swal from "sweetalert2";
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import { FormModal, FormTournament } from "../components";
+import { useUiStore } from "../../hooks/useUiStore";
+import { BaseLayout } from "../layout/BaseLayout";
 
 export const FootballPage = () => {
 
   const { startLoadTournaments, tournaments, startDeleteTournament} = useTournamentsStore();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { openModal, closeModal} = useUiStore();
   const columns = [
     { field: 'name', headerName: 'Nombre', flex: 1, minWidth: 100},
     { field: 'description', headerName: 'Descripción', flex: 1, minWidth: 150},
@@ -44,8 +46,7 @@ export const FootballPage = () => {
 
         const onClickEdit = (e) => {
           dispatch(onActiveTournament({id,name,description,exact_marker,goals_difference,goals_of_a_team,winner_selection}));
-          navigate('/tournament/show/'+params.id);
-          return;
+          openModal();
         };
 
         const onClickDelete = (e) => {
@@ -79,7 +80,7 @@ export const FootballPage = () => {
                       alignItems='center'
                       directions="column">
                     <Grid item>
-                    <Tooltip title="Detalle">
+                    <Tooltip title="ver">
                         <RemoveRedEyeIcon onClick={onClickDetail}/>
                     </Tooltip>
                   </Grid>
@@ -104,6 +105,10 @@ export const FootballPage = () => {
     startLoadTournaments();
   }, [])
 
+  const createTournament = () => {
+    // dispatch(onClearActiveMatch());
+    openModal();
+  }
   return (
     <BaseLayout>
       <h1>Torneos Activos</h1>
@@ -123,7 +128,7 @@ export const FootballPage = () => {
             >
               <Button 
                       fullWidth
-                      onClick={() => navigate('/tournament/create')}
+                      onClick={() => createTournament()}
                       type="submit"
                       variant="contained">
                         Crear
@@ -139,6 +144,9 @@ export const FootballPage = () => {
         // checkboxSelection
       />
     </div>
+      <FormModal>
+          <FormTournament/>
+      </FormModal>
     </BaseLayout>
   )
 }

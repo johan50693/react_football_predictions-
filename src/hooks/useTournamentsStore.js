@@ -5,12 +5,14 @@ import Swal from 'sweetalert2';
 import footballApi from '../apis/footballApi';
 import { onChecking } from '../store';
 import { onAddNewTournament, onDeleteTournament, onLoadTournaments, onUpdateTournament } from '../store/tournaments/tournamentSlice';
+import { useUiStore } from './useUiStore';
 
 export const useTournamentsStore = () => {
   
   const {tournaments, tournamentSelected} = useSelector( state => state.tournament );
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { openModal, closeModal, open } = useUiStore();
 
   const startLoadTournaments = async () => {
 
@@ -57,8 +59,8 @@ export const useTournamentsStore = () => {
         goals_difference,
       };
       const {data} = await footballApi.put('/tournament/'+id,body);
+      closeModal();
       dispatch(onUpdateTournament({id,name, description, exact_marker, goals_difference, winner_selection, goals_of_a_team }))
-      navigate('/');
       Swal.fire({
         title: "Actualización Exitosa",
         text: data.message,
