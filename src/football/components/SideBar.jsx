@@ -77,6 +77,7 @@ export const SideBar = ({ open, drawerWidth, handleDrawerClose }) => {
         <Divider />
         <List>
           {['Torneos', 'Pronosticos', 'Partidos', 'Participantes'].map((text, index) => (
+            
             <ListItem key={text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
@@ -95,11 +96,13 @@ export const SideBar = ({ open, drawerWidth, handleDrawerClose }) => {
                   {
                     (index === 0 )
                     ? <Link component={RouterLink} to='/' underline="none"><EmojiEventsIcon /></Link> 
-                    : ( index === 1) 
+                    : ( index === 1 && active) 
                       ? <Link component={RouterLink} to={`/tournament/${active?.id}/prediction`} underline="none"><QueryStatsIcon/> </Link>
-                      : ( index === 2 )
+                      : ( index === 2 && active)
                         ? <Link component={RouterLink} to={`/tournament/${active?.id}/matches`} underline="none"><SportsSoccerIcon/></Link>
-                        : <Link component={RouterLink} to={`/tournament/${active?.id}/participants`} underline="none"><GroupsIcon/></Link>
+                        : ( index === 3 && active)
+                        ? <Link component={RouterLink} to={`/tournament/${active?.id}/participants`} underline="none"><GroupsIcon/></Link>
+                        : null
                   }
                 </ListItemIcon>
                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
