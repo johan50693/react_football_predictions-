@@ -60,6 +60,10 @@ export const FootballPredictionPage = () => {
       renderCell: (params) => {
 
         const answer = params.row;
+        const date = new Date().toISOString().split('T')[0];
+        const dateLimit = new Date (answer.date).toISOString().split('T')[0];
+        const activeVote= date < dateLimit;
+        // console.log({dateLimit, date, res: date >= dateLimit});
         let newAnswer = {
           id: answer.id,
           poll_id: answer.poll_id,
@@ -82,7 +86,7 @@ export const FootballPredictionPage = () => {
                       alignItems='center'
                       directions="column">
                   <Grid item>
-                    <Tooltip title="Votar">
+                    <Tooltip title="Votar" sx={{display : activeVote ? 'block' : 'none'}}>
                         <RuleIcon onClick={onClickVote}/>
                     </Tooltip>
                   </Grid>
@@ -103,7 +107,7 @@ export const FootballPredictionPage = () => {
 
       <div style={{ height: 400, width: '100%' }}>
       <DataGrid
-        getRowHeight={() => 'auto'}
+        // getRowHeight={() => 'auto'}
         rows={answers}
         columns={columns}
         pageSize={5}

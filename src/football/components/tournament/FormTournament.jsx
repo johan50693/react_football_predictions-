@@ -2,7 +2,7 @@ import { Button, Grid, Link, TextField, Tooltip, Typography } from "@mui/materia
 import { Link as RouterLink, useNavigate, useNavigation, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useForm, useTournamentsStore } from "../../../hooks";
+import { useForm, useTournamentsStore, useUserStore } from "../../../hooks";
 import { useUiStore } from "../../../hooks/useUiStore";
 
 let formData = {
@@ -13,6 +13,10 @@ let formData = {
   goals_of_a_team: '',
   goals_difference: '',
 };
+
+let formAdd ={
+  email: '',
+}
 
 const formValidations = {
   name : [(value) => value.length > 3, 'El nombre debe tener mas de 3 letras'],
@@ -26,9 +30,11 @@ const formValidations = {
 export const FormTournament = () => {
 
   const { active } = useSelector(state => state.tournament);
+  const { isAssigned } = useSelector(state => state.user);
   const { openModal, closeModal, open } = useUiStore();
   const { startCreateTournament, startUpdateTournament } = useTournamentsStore();
   const [formSubmited, setformSubmited] = useState(false);
+  const {startAssignUserToTournament} = useUserStore();
   const {
           onInputChange, 
           onResetForm,
@@ -48,7 +54,8 @@ export const FormTournament = () => {
           goalsOfaTeamValid,
           isFormValid
         } = useForm(formData,formValidations);
-
+  const {email, onInputChange: onInputChangeAdd} = useForm(formAdd);
+  
   const onSubmit = (event) => {
     event.preventDefault();
     setformSubmited(true);
@@ -61,14 +68,84 @@ export const FormTournament = () => {
     }
   }
 
+  const onSubmitAdd = (event) => {
+    event.preventDefault();
+    startAssignUserToTournament({email,tournament_id: active.id});
+  }
+  
   useEffect(() => {
     if ( active ) {
       setFormState(active);
     }
   }, [])
-  
+ 
   return (
-      <form onSubmit={onSubmit} >
+    <div>
+      {
+        (isAssigned)
+        ? (
+          <form onSubmit={onSubmitAdd} >
+            <Grid container> 
+              <Grid
+                    item
+                    xs={12}
+                    sx={{mt:2}}
+              >
+                <TextField
+                  required
+                  fullWidth
+                  autoComplete="off"
+                  label="Correo"
+                  type="email"
+                  placeholder="Ingresa el correo electronico del usuario"
+                  name="email"
+                  value={email}
+                  onChange={onInputChangeAdd}
+                  error={!!nameValid && formSubmited}
+                  helperText={nameValid}
+                />
+              </Grid>
+            
+              <Grid container 
+                    spacing={2} 
+                    justifyContent='center'
+                    alignItems='center'
+                    directions= "column">
+                <Grid
+                    item
+                    xs={5}
+                    md={5}
+                    sx={{mt:2}}
+
+              >
+                <Button onClick={() => closeModal()}
+                        fullWidth
+                        color="error"
+                        type="button"
+                        variant="contained">
+                          Cancelar
+                </Button>
+              </Grid>
+                <Grid
+                    item
+                    xs={5}
+                    md={5}
+                    sx={{mt:2}}
+
+              >
+                <Button 
+                        fullWidth
+                        type="submit"
+                        variant="contained">
+                          Guardar
+                </Button>
+              </Grid>
+              </Grid>
+            </Grid>
+          </form>
+          )
+        :(
+        <form onSubmit={onSubmit} >
           <Grid container> 
             <Grid
                   item
@@ -220,5 +297,8 @@ export const FormTournament = () => {
             </Grid>
           </Grid>
         </form>
+        )
+      }
+    </div>
   )
 }

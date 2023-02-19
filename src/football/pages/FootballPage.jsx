@@ -12,6 +12,8 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { FormModal, FormTournament } from "../components";
 import { useUiStore } from "../../hooks/useUiStore";
 import { BaseLayout } from "../layout/BaseLayout";
+import PanToolAltIcon from '@mui/icons-material/PanToolAlt';
+import { onCloseAssigned, onOpenAssigned } from "../../store";
 
 export const FootballPage = () => {
 
@@ -46,6 +48,13 @@ export const FootballPage = () => {
 
         const onClickEdit = (e) => {
           dispatch(onActiveTournament({id,name,description,exact_marker,goals_difference,goals_of_a_team,winner_selection}));
+          dispatch(onCloseAssigned());
+          openModal();
+        };
+
+        const onClickAssign = (e) => {
+          dispatch(onActiveTournament({id,name,description,exact_marker,goals_difference,goals_of_a_team,winner_selection}));
+          dispatch(onOpenAssigned());
           openModal();
         };
 
@@ -87,6 +96,11 @@ export const FootballPage = () => {
                   <Grid item>
                     <Tooltip title="Editar">
                         <EditIcon onClick={onClickEdit}/>
+                    </Tooltip>
+                  </Grid>
+                  <Grid item>
+                    <Tooltip title="Agregar usuario">
+                        <PanToolAltIcon onClick={onClickAssign}/>
                     </Tooltip>
                   </Grid>
                   <Grid item>
