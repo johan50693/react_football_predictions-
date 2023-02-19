@@ -80,7 +80,7 @@ export const LoginPage = () => {
                         Iniciar Sesión
               </Button>
             </Grid>
-            <Grid
+            {/* <Grid
                   item
                   xs={12}
                   sx={{mt:2}}
@@ -91,7 +91,7 @@ export const LoginPage = () => {
                       variant="contained">
                         Google
               </Button>
-            </Grid>
+            </Grid> */}
             <Grid
                   container
                   justifyContent='end'

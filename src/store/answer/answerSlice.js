@@ -31,8 +31,16 @@ export const answerSlice = createSlice({
     onClearActiveAnswer: (state, {payload}) => {
       state.active = null;
     },
+    onClearAnswers: (state, {payload}) => {
+      state.answers = [];
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { onLoadAnswers, onActiveAnswer, onUpdateAnswer, onClearActiveAnswer } = answerSlice.actions
+export const { onLoadAnswers, 
+  onActiveAnswer, 
+  onUpdateAnswer, 
+  onClearActiveAnswer,
+  onClearAnswers 
+} = answerSlice.actions

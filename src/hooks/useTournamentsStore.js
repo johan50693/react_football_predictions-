@@ -36,7 +36,9 @@ export const useTournamentsStore = () => {
         goals_difference,
       };
       const {data} = await footballApi.post('/tournament/create',body);
-      navigate('/');
+      closeModal();
+      startLoadTournaments();
+      // navigate('/');
       Swal.fire({
         title: "Registro Exitoso",
         text: data.message,

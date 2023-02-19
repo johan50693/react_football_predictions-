@@ -34,6 +34,12 @@ export const tournamentSlice = createSlice({
     onActiveTournament: (state, {payload}) => {
       state.active = payload;
     },
+    onClearActiveTournament: (state, {payload}) => {
+      state.active = null;
+    },
+    onClearTournaments: (state, {payload}) => {
+      state.tournaments = [];
+    },
   },
 })
 
@@ -44,4 +50,6 @@ export const  { onLoadTournaments,
                 onUpdateTournament,
                 onActiveTournament,
                 onAddNewTournament,
+                onClearActiveTournament,
+                onClearTournaments,
               } = tournamentSlice.actions

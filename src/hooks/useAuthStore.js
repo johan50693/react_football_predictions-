@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import Swal from 'sweetalert2';
 import footballApi from '../apis/footballApi';
-import { onChecking, onLogin, onLogout } from '../store';
+import { onChecking, onClearActiveTournament, onClearAnswers, onClearMatches, onClearTournaments, onLogin, onLogout } from '../store';
 
 export const useAuthStore = () => {
 
@@ -63,6 +63,23 @@ export const useAuthStore = () => {
     }
   }
 
+  const startLogout = () => {
+    
+    try {
+      localStorage.clear();
+      dispatch(onLogout());
+      dispatch(onClearTournaments());
+      dispatch(onClearMatches());
+      dispatch(onClearAnswers());
+    } catch (error) {
+      localStorage.clear();
+      dispatch(onLogout());
+      dispatch(onClearTournaments());
+      dispatch(onClearMatches());
+      dispatch(onClearAnswers());
+    }
+  }
+
   return {
           // * Atributos
           status, 
@@ -72,5 +89,6 @@ export const useAuthStore = () => {
           startLogin,
           checkAuthToken,
           startRegister,
+          startLogout,
   }
 }

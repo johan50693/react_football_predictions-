@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom"
 import { LoginRoutes } from "../auth/routes/LoginRoutes";
+import { LoadingSkeleton } from "../football/components/LoadingSkeleton";
 import { FootballRoutes } from "../football/router/FootballRoutes";
 import { useAuthStore } from "../hooks";
 
@@ -16,7 +17,7 @@ export const AppRouter = () => {
   }, [])
   
   if( status == 'checking'){
-    return (<h1>Loading...</h1>)
+    return (<LoadingSkeleton/>)
   }
 
   return (

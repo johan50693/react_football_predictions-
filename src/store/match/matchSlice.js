@@ -40,8 +40,18 @@ export const matchSlice = createSlice({
       state.matches.push(payload);
       state.active = null;
     },
+    onClearMatches: (state, {payload}) => {
+      state.matches = [];
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { onLoadMatch, onDeleteMatch, onActiveMatch, onUpdateMatch, onClearActiveMatch, onAddNewMatch } = matchSlice.actions
+export const { onLoadMatch, 
+  onDeleteMatch, 
+  onActiveMatch, 
+  onUpdateMatch, 
+  onClearActiveMatch, 
+  onAddNewMatch,
+  onClearMatches
+} = matchSlice.actions

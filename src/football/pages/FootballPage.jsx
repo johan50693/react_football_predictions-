@@ -5,8 +5,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useTournamentsStore } from "../../hooks/useTournamentsStore";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { onActiveTournament } from "../../store/tournaments/tournamentSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { onActiveTournament, onClearActiveTournament } from "../../store/tournaments/tournamentSlice";
 import Swal from "sweetalert2";
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { FormModal, FormTournament } from "../components";
@@ -21,6 +21,7 @@ export const FootballPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { openModal, closeModal} = useUiStore();
+  const {user} = useSelector( state => state.auth);
   const columns = [
     { field: 'name', headerName: 'Nombre', flex: 1, minWidth: 100},
     { field: 'description', headerName: 'Descripción', flex: 1, minWidth: 150},
@@ -37,9 +38,16 @@ export const FootballPage = () => {
                 goals_of_a_team,
                 id,
                 name,
-                winner_selection
+                winner_selection,
+                createdby
               } = params.row;
 
+        const canAlter = () => {
+          if(user.uid == createdby){
+            return true;
+          }
+          return false;
+        }
         const onClickDetail = (e) => {
           dispatch(onActiveTournament({id,name,description,exact_marker,goals_difference,goals_of_a_team,winner_selection}));
           navigate(`/tournament/${params.id}/prediction`);
@@ -93,21 +101,29 @@ export const FootballPage = () => {
                         <RemoveRedEyeIcon onClick={onClickDetail}/>
                     </Tooltip>
                   </Grid>
-                  <Grid item>
-                    <Tooltip title="Editar">
-                        <EditIcon onClick={onClickEdit}/>
-                    </Tooltip>
-                  </Grid>
-                  <Grid item>
-                    <Tooltip title="Agregar usuario">
-                        <PanToolAltIcon onClick={onClickAssign}/>
-                    </Tooltip>
-                  </Grid>
-                  <Grid item>
-                    <Tooltip title="Eliminar">
-                        <DeleteIcon onClick={onClickDelete}/>
-                    </Tooltip>
-                  </Grid>
+                    { (canAlter())
+                      ? (
+                        <>
+                          <Grid item>
+                            <Tooltip title="Agregar usuario">
+                                <PanToolAltIcon onClick={onClickAssign}/>
+                            </Tooltip>
+                          </Grid>
+                          <Grid item>
+                            <Tooltip title="Editar">
+                                <EditIcon onClick={onClickEdit}/>
+                            </Tooltip>
+                          </Grid>
+                          <Grid item>
+                          <Tooltip title="Eliminar">
+                              <DeleteIcon onClick={onClickDelete}/>
+                          </Tooltip>
+                        </Grid>
+                        </>
+                      )
+                      :null
+
+                    }
                 </Grid>
                 );
       }
@@ -120,7 +136,8 @@ export const FootballPage = () => {
   }, [])
 
   const createTournament = () => {
-    // dispatch(onClearActiveMatch());
+    dispatch(onClearActiveTournament());
+    dispatch(onCloseAssigned());
     openModal();
   }
   return (

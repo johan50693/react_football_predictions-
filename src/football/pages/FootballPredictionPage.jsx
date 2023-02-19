@@ -33,6 +33,9 @@ const formaResult = (params) => {
   if (params.row.m_penalties_a != null) {
     return `${params.row.m_goals_a} (${params.row.m_penalties_a}) - ${params.row.m_goals_b} (${params.row.m_penalties_b})`;
   } else {
+    if(params.row.m_goals_a == null && params.row.m_goals_b == null){
+      return 'Por Definir';
+    }
     return `${params.row.m_goals_a} - ${params.row.m_goals_b}`;
   }
 }

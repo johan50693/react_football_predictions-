@@ -49,7 +49,6 @@ export const FootballMatchPage = () => {
   }
 
   const columns = [
-    //TODO: Definir renderCell para agregar inpusts dinamicos a los campos de goles
     { field: 'league', headerName: 'Torneo', flex: 1, minWidth: 100 },
     { field: 'team_a', headerName: 'Equipo', flex: 1, minWidth: 100 },
     { field: 'goals_a', headerName: 'Goles', flex: 1, minWidth: 50, valueGetter: formatGoalsA },
@@ -141,9 +140,9 @@ export const FootballMatchPage = () => {
                     <Tooltip title="Agregar encuesta">
                         <PanToolAltIcon onClick={onClickAssign}/>
                     </Tooltip>
-                    <Tooltip title="Eliminar">
+                    {/* <Tooltip title="Eliminar">
                         <DeleteIcon onClick={onClickDelete}/>
-                    </Tooltip>
+                    </Tooltip> */}
                   </Grid>
                 </Grid>
                 );
