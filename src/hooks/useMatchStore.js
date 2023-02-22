@@ -89,6 +89,24 @@ export const useMatchStore = () => {
     }
   }
 
+  const startCheckUpdateByDay = async () => {
+
+    try {
+      await footballApi.put('/match/checkupdatebyday/results');
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const startCheckCreateByWeek = async () => {
+
+    try {
+      await footballApi.put('/match/checkcreatebyweek/results');
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return {
     // * Propiedades
     matches,
@@ -97,6 +115,8 @@ export const useMatchStore = () => {
     startAssignToTournament,
     startDeleteMatch,
     startUpdateMatch,
-    startCreateMatch
+    startCreateMatch,
+    startCheckUpdateByDay,
+    startCheckCreateByWeek
   }
 }

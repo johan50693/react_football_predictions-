@@ -39,7 +39,7 @@ const formatGoalsB = (params) => {
 export const FootballMatchPage = () => {
 
   const { openModal, closeModal} = useUiStore();
-  const {startLoadMatches, matches, startAssignToTournament, startDeleteMatch} = useMatchStore();
+  const {startLoadMatches, matches, startAssignToTournament, startDeleteMatch, startCheckCreateByWeek, startCheckUpdateByDay} = useMatchStore();
   const { active } = useSelector(state => state.tournament);
   const dispatch = useDispatch();
   
@@ -153,6 +153,8 @@ export const FootballMatchPage = () => {
   
   useEffect(() => {
     startLoadMatches();
+    startCheckCreateByWeek();
+    startCheckUpdateByDay();
   }, [])
   
   return (
