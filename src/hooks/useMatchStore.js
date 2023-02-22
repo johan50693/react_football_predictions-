@@ -101,7 +101,7 @@ export const useMatchStore = () => {
   const startCheckCreateByWeek = async () => {
 
     try {
-      await footballApi.put('/match/checkcreatebyweek/results');
+      await footballApi.post('/match/checkcreatebyweek/results');
     } catch (error) {
       console.log(error);
     }
